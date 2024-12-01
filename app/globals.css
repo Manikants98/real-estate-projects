@@ -8,14 +8,31 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  .home {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
 
-body {
+.home {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 4px !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding: 8px;
+}
+
+.leaflet-popup-content * {
+  margin: 0 !important;
 }
