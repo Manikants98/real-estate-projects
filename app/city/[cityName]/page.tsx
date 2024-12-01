@@ -4,6 +4,7 @@ import RealEstateMap from '@/app/components/RealEstateMap'
 import { useEffect, useState } from 'react'
 import { Skeleton, TextField, Button } from '@mui/material'
 import { Room } from '@mui/icons-material'
+import Image from 'next/image'
 
 interface Project {
   name: string
@@ -101,7 +102,7 @@ export default function CityPage({ params }: CityPageProps) {
                   key={index}
                   className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-200"
                 >
-                  <img
+                  <Image
                     src={project.imageUrl || 'https://via.placeholder.com/300x200'}
                     alt={project.name}
                     className="w-full h-48 object-cover"
