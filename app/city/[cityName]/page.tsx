@@ -14,13 +14,7 @@ interface Project {
   bhkDetails: string
 }
 
-interface CityPageProps {
-  params: {
-    cityName: string
-  }
-}
-
-export default function CityPage({ params }: CityPageProps) {
+export default function CityPage({ params }: any) {
   const [cityName, setCityName] = useState<string | null>(null)
   const [projects, setProjects] = useState<Project[]>([])
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([])
@@ -29,22 +23,26 @@ export default function CityPage({ params }: CityPageProps) {
   const [project, setProject] = useState<Project>({} as Project)
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    const resolveParams = async () => {
-      const { cityName } = await params
-      setCityName(cityName)
-      try {
-        const response = await fetch(`/api/scrape?cityName=${cityName}`)
-        const data: Project[] = await response.json()
+  const fetchLocation = async () => {
+    const { cityName } = params
+    setCityName(cityName)
+
+    fetch(`/api/scrape?cityName=${cityName}`)
+      .then((response) => response.json())
+      .then((data: Project[]) => {
         setProjects(data)
         setFilteredProjects(data)
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error('Failed to fetch projects:', error)
-      } finally {
+      })
+      .finally(() => {
         setLoading(false)
-      }
-    }
-    resolveParams()
+      })
+  }
+
+  useEffect(() => {
+    fetchLocation()
   }, [params])
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +100,7 @@ export default function CityPage({ params }: CityPageProps) {
                   key={index}
                   className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-200"
                 >
-                  <Image
+                  <img
                     src={project.imageUrl || 'https://via.placeholder.com/300x200'}
                     alt={project.name}
                     className="w-full h-48 object-cover"
