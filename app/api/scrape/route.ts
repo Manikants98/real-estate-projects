@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
       }
     })
     return NextResponse.json(projects)
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to scrape data' }, { status: 500 })
+  } catch (_error) {
+    return NextResponse.json({ error: 'Geocoding failed' }, { status: 500 })
   }
 }
