@@ -24,7 +24,7 @@ export default function CityPage({ params }: any) {
   const [open, setOpen] = useState(false)
 
   const fetchLocation = async () => {
-    const { cityName } = params
+    const { cityName } = await params
     setCityName(cityName)
 
     fetch(`/api/scrape?cityName=${cityName}`)
