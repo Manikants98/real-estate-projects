@@ -27,6 +27,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Location not found' }, { status: 404 })
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Geocoding failed' }, { status: 500 })
+    return NextResponse.json({ error: error }, { status: 500 })
   }
 }
