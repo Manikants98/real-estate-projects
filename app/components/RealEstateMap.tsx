@@ -28,14 +28,12 @@ const RealEstateMap: React.FC<ShowOnMapProps> = ({ project, setOpen, open }) => 
 
   useEffect(() => {
     if (!open) return
-
     const fetchCoordinates = async () => {
       setLoading(true)
       try {
         const { data } = await axios.get('/api/geocode', {
           params: { location: `${project.location}, India` },
         })
-
         if (data.latitude && data.longitude) {
           setCoordinates({ latitude: data.latitude, longitude: data.longitude })
         } else {
@@ -52,20 +50,15 @@ const RealEstateMap: React.FC<ShowOnMapProps> = ({ project, setOpen, open }) => 
 
   useEffect(() => {
     if (!coordinates || !mapRef.current || !open) return
-
     const { latitude, longitude } = coordinates
-
     const map = L.map(mapRef.current).setView([latitude, longitude], 12)
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-
     const customIcon = L.icon({
       iconUrl: '/pngegg.png',
       iconSize: [40, 65],
       iconAnchor: [20, 40],
       popupAnchor: [0, -40],
     })
-
     const marker = L.marker([latitude, longitude], { icon: customIcon }).addTo(map)
     marker.bindPopup(`
       <strong>${project.name}</strong>
